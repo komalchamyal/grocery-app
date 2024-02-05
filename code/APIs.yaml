@@ -1,0 +1,337 @@
+swagger: '2.0'
+info:
+  title: Flask API
+  version: 1.0.0
+basePath: /
+paths:
+  /downloadcsv:
+    get:
+      summary: Download CSV File
+      responses:
+        200:
+          description: Successful response
+        400:
+          description: Failed to generate CSV file
+
+  /login:
+    post:
+      summary: User login
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+              email:
+                type: string
+      responses:
+        200:
+          description: Successful login
+        401:
+          description: Incorrect credentials or user not registered
+
+  /register:
+    post:
+      summary: User registration
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+              email:
+                type: string
+              checked:
+                type: boolean
+      responses:
+        200:
+          description: Successful registration
+        401:
+          description: User already exists
+
+  /getCategories:
+    get:
+      summary: Get approved categories
+      responses:
+        200:
+          description: Successful response
+
+  /addCategory:
+    post:
+      summary: Add a new category
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+      responses:
+        200:
+          description: Category added successfully
+        401:
+          description: Category already exists
+
+  /editCategory:
+    post:
+      summary: Edit an existing category
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              id:
+                type: integer
+      responses:
+        200:
+          description: Category updated successfully
+        400:
+          description: Something went wrong
+
+  /deleteCategory:
+    delete:
+      summary: Delete a category
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+      responses:
+        200:
+          description: Category deleted successfully
+        400:
+          description: Something went wrong
+
+  /approveCategory:
+    post:
+      summary: Approve a category
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+      responses:
+        200:
+          description: Category approved successfully
+        401:
+          description: Category does not exist
+
+  /rejectCategory:
+    post:
+      summary: Reject a category
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+      responses:
+        200:
+          description: Category rejected successfully
+        401:
+          description: Category does not exist
+
+  /requestCategory:
+    post:
+      summary: Request a new category
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+      responses:
+        200:
+          description: Category requested successfully
+        401:
+          description: Category already exists
+
+  /getCategoryRequests:
+    get:
+      summary: Get pending category requests
+      responses:
+        200:
+          description: Successful response
+
+  /getProducts:
+    get:
+      summary: Get all products
+      responses:
+        200:
+          description: Successful response
+
+  /addProduct:
+    post:
+      summary: Add a new product
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              category:
+                type: string
+              stock:
+                type: integer
+              price:
+                type: number
+              expiry:
+                type: string
+      responses:
+        200:
+          description: Product added successfully
+        401:
+          description: Product already exists
+
+  /editProduct:
+    post:
+      summary: Edit an existing product
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              id:
+                type: integer
+              category:
+                type: string
+              stock:
+                type: integer
+              price:
+                type: number
+              expiry:
+                type: string
+      responses:
+        200:
+          description: Product updated successfully
+        400:
+          description: Something went wrong
+
+  /deleteProduct:
+    delete:
+      summary: Delete a product
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+      responses:
+        200:
+          description: Product deleted successfully
+        400:
+          description: Something went wrong
+
+  /buyProducts:
+    post:
+      summary: Buy products
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              cart:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    quantity:
+                      type: integer
+                    stock:
+                      type: integer
+                    price:
+                      type: number
+              user:
+                type: string
+      responses:
+        200:
+          description: Products bought successfully
+        401:
+          description: Stock is less
+
+  /getManagerRequests:
+    get:
+      summary: Get manager requests
+      responses:
+        200:
+          description: Successful response
+
+  /approveManagerRequests:
+    post:
+      summary: Approve manager request
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+      responses:
+        200:
+          description: Manager approved successfully
+        401:
+          description: Manager does not exist
+
+  /rejectManagerRequests:
+    post:
+      summary: Reject manager request
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+      responses:
+        200:
+          description: Manager request rejected successfully
+        401:
+          description: Manager does not exist
